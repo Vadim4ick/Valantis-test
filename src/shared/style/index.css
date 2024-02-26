@@ -1,0 +1,41 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.container-header {
+  max-width: 1350px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.title-1 {
+  @apply text-3xl font-semibold;
+}
+
+.title-2 {
+  @apply text-2xl font-semibold;
+}
+
+.title-3 {
+  @apply text-base font-medium;
+}
+
+.sub-title {
+  @apply text-[14px];
+}
+
+.product {
+  @apply p-3 bg-[#f9f9f9] w-full border-[1px] border-[#ddd] rounded-md;
+}
