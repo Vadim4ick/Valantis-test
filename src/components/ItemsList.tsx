@@ -2,8 +2,15 @@ import { Typography } from "@/shared/ui/Typography";
 import { useItems } from "@/services";
 import { Item } from "./Item";
 import { getUniqueItemsById } from "@/shared/helpers/getUniqueItemsById";
+import { ItemsService } from "@/services/query";
 
-const ItemsList = ({ itemsIds }: { itemsIds: string[] }) => {
+interface ItemsListProps {
+  itemsIds: string[];
+}
+
+const ItemsList = (props: ItemsListProps) => {
+  const { itemsIds } = props;
+
   const { data: items, isLoading, error } = useItems(itemsIds);
 
   if (isLoading) {

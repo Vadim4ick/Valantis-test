@@ -1,9 +1,10 @@
 import { FilterForm } from "@/components/FilterForm";
 import { ItemsList } from "@/components/ItemsList";
-import { useItemIds } from "@/services";
+import { Paggination } from "@/components/Paggination";
+import { useFiltred } from "@/services";
 
 const HomePage = () => {
-  const { data: itemsIds, error, isLoading } = useItemIds();
+  const { data: itemsIdsPaggination, error, isLoading } = useFiltred("");
 
   if (isLoading) {
     return <div>load...</div>;
@@ -13,7 +14,7 @@ const HomePage = () => {
     return <div>err</div>;
   }
 
-  if (!itemsIds?.result) {
+  if (!itemsIdsPaggination?.result) {
     return <div>Что-то пошло не так</div>;
   }
 
@@ -21,7 +22,9 @@ const HomePage = () => {
     <section>
       <FilterForm />
 
-      <ItemsList itemsIds={itemsIds.result} />
+      {/* <ItemsList itemsIds={itemsForCurrentPage} /> */}
+
+      {/* <Paggination /> */}
     </section>
   );
 };
