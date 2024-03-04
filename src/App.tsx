@@ -1,17 +1,17 @@
-import "./shared/style/index.css";
 import { HomePage } from "./pages/HomePage";
 import { MainLayout } from "./shared/layout/MainLayout";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Provider } from "react-redux";
+import { store } from "./redux/store";
+
+import "./shared/style/index.css";
 
 function App() {
-  const queryClient = new QueryClient();
-
   return (
-    <QueryClientProvider client={queryClient}>
+    <Provider store={store}>
       <MainLayout>
         <HomePage />
       </MainLayout>
-    </QueryClientProvider>
+    </Provider>
   );
 }
 

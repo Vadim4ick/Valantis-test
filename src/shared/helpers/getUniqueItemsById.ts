@@ -11,3 +11,9 @@ export const getUniqueItemsById = (items: Item[]) => {
 
   return Array.from(uniqueItemsById.values());
 };
+
+export const getUniqueIds = (ids: string[]) => {
+  const uniqueIds = new Set(ids);
+
+  return Array.from(uniqueIds);
+};

@@ -1,8 +1,9 @@
 import { calculateOldPrice } from "@/shared/helpers/calculateOldPrice";
 import { Item as IItem } from "@/shared/types";
 import { Typography } from "@/shared/ui/Typography";
+import { memo } from "react";
 
-const Item = ({ item }: { item: IItem }) => {
+const Item = memo(({ item }: { item: IItem }) => {
   return (
     <Typography
       tag="article"
@@ -32,6 +33,6 @@ const Item = ({ item }: { item: IItem }) => {
       <button>В корзину</button>
     </Typography>
   );
-};
+});
 
 export { Item };

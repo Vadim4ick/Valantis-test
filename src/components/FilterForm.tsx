@@ -1,22 +1,7 @@
-// import { useFiltred } from "@/services";
-import { useState } from "react";
+import { memo, useState } from "react";
 
-const FilterForm = () => {
+const FilterForm = memo(() => {
   const [value, setValue] = useState("");
-
-  // const { data: itemsIds, error, isLoading } = useFiltred(value);
-
-  // if (isLoading) {
-  //   return <div>load...</div>;
-  // }
-
-  // if (error) {
-  //   return <div>err</div>;
-  // }
-
-  // if (!itemsIds?.result) {
-  //   return <div>Что-то пошло не так</div>;
-  // }
 
   return (
     <div>
@@ -27,6 +12,6 @@ const FilterForm = () => {
       />
     </div>
   );
-};
+});
 
 export { FilterForm };

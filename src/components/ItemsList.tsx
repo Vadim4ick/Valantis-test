@@ -1,31 +1,34 @@
 import { Typography } from "@/shared/ui/Typography";
-import { useItems } from "@/services";
 import { Item } from "./Item";
-import { getUniqueItemsById } from "@/shared/helpers/getUniqueItemsById";
-import { ItemsService } from "@/services/query";
+import { memo, useEffect } from "react";
+import { getItems } from "@/api/rtkApi";
 
 interface ItemsListProps {
-  itemsIds: string[];
+  itemsIds: string[] | undefined;
 }
 
-const ItemsList = (props: ItemsListProps) => {
+const ItemsList = memo((props: ItemsListProps) => {
   const { itemsIds } = props;
 
-  const { data: items, isLoading, error } = useItems(itemsIds);
+  const [getItemsFn, { isLoading, data: items, error }] = getItems({});
+
+  useEffect(() => {
+    if (itemsIds) {
+      getItemsFn(itemsIds);
+    }
+  }, [getItemsFn, itemsIds]);
 
   if (isLoading) {
     return <div>load...</div>;
   }
 
   if (error) {
-    return <div>error</div>;
+    return <div>Ошибка</div>;
   }
 
   if (!items?.result) {
     return <div>Что-то пошло не так</div>;
   }
-
-  const uniqueItems = getUniqueItemsById(items.result);
 
   return (
     <>
@@ -34,12 +37,12 @@ const ItemsList = (props: ItemsListProps) => {
       </Typography>
 
       <Typography className="grid grid-cols-main gap-4">
-        {uniqueItems.map((item, i) => {
+        {items.result.map((item, i) => {
           return <Item key={`${item.id}_${i}`} item={item} />;
         })}
       </Typography>
     </>
   );
-};
+});
 
 export { ItemsList };

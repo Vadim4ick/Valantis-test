@@ -1,6 +1,7 @@
 import { Typography } from "@/shared/ui/Typography";
+import { memo } from "react";
 
-const Header = () => {
+const Header = memo(() => {
   return (
     <header className="h-16 flex items-center container-header">
       <Typography tag="h1" variant="title-1">
@@ -8,6 +9,6 @@ const Header = () => {
       </Typography>
     </header>
   );
-};
+});
 
 export { Header };
