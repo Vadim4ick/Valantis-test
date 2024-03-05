@@ -1,3 +1,4 @@
+import { Filters } from "@/redux/filters/type";
 import { Pagination } from "@/redux/pagination/type";
 
 export interface Item {
@@ -9,4 +10,5 @@ export interface Item {
 
 export interface StateSchema {
   pagination: Pagination;
+  filters: Filters;
 }

@@ -13,9 +13,9 @@ const HomePage = memo(() => {
   const startIndex = useAppSelector(selectStartIndex);
   // const endIndex = useAppSelector(selectEndIndex);
 
-  const [getIdsFn, { isLoading, data: itemsIdsPaggination, error }] = getIds(
-    {}
-  );
+  const [getIdsFn, { isLoading, data: itemsIdsPaggination, error }] = getIds({
+    fixedCacheKey: "filter",
+  });
 
   useEffect(() => {
     getIdsFn("");
@@ -49,10 +49,6 @@ const HomePage = memo(() => {
     return Array.from(uniqueItems) as string[];
   }, [itemsIdsPaggination, startIndex]);
 
-  if (isLoading) {
-    return <div>load...</div>;
-  }
-
   if (error) {
     return <div>Что-то не так</div>;
   }
@@ -61,6 +57,7 @@ const HomePage = memo(() => {
     <section>
       <FilterForm />
 
+      {isLoading && <div>load...</div>}
       <ItemsList itemsIds={itemsForCurrentPage} />
 
       <Pagination />

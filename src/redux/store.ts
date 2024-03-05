@@ -4,10 +4,12 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { paginationReducer } from "./pagination/slice/paginationSlice";
 import { rtkApi } from "@/api/rtkApi";
+import { filtersReducer } from "./filters/slice/filtersSlice";
 
 export const store = configureStore({
   reducer: {
     pagination: paginationReducer,
+    filters: filtersReducer,
 
     [rtkApi.reducerPath]: rtkApi.reducer,
   },
