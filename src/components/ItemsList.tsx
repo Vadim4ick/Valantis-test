@@ -13,10 +13,10 @@ const ItemsList = memo((props: ItemsListProps) => {
   const [getItemsFn, { isLoading, data: items, error }] = getItems({});
 
   useEffect(() => {
-    if (itemsIds) {
+    if (itemsIds?.length) {
       getItemsFn(itemsIds);
     }
-  }, [getItemsFn, itemsIds]);
+  }, [itemsIds]);
 
   if (isLoading) {
     return <div>load...</div>;

@@ -1,8 +1,8 @@
-import { getIds } from "@/api/rtkApi";
-import { FilterForm } from "@/components/FilterForm";
+import { getIdsSearch } from "@/api/rtkApi";
+import { AllFilters } from "@/components/Filters";
 import { ItemsList } from "@/components/ItemsList";
 import { Pagination } from "@/components/Pagination";
-import { getActiveBrand } from "@/redux/filters/selectors";
+// import { getActiveBrand } from "@/redux/filters/selectors";
 import { selectStartIndex } from "@/redux/pagination/selectors";
 import { paginationActions } from "@/redux/pagination/slice/paginationSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
@@ -12,19 +12,17 @@ const HomePage = memo(() => {
   const dispatch = useAppDispatch();
 
   const startIndex = useAppSelector(selectStartIndex);
-  const activeBrand = useAppSelector(getActiveBrand);
+  // const activeBrand = useAppSelector(getActiveBrand);
   // const endIndex = useAppSelector(selectEndIndex);
 
-  const [getIdsFn, { isLoading, data: itemsIdsPaggination, error }] = getIds({
-    fixedCacheKey: "filter",
-  });
+  const [getIdsFn, { isLoading, data: itemsIdsPaggination, error }] =
+    getIdsSearch({
+      fixedCacheKey: "filter",
+    });
 
   useEffect(() => {
-    getIdsFn({
-      filterBrand: activeBrand,
-      filterString: "",
-    });
-  }, [activeBrand, getIdsFn]);
+    getIdsFn("");
+  }, [getIdsFn]);
 
   useEffect(() => {
     if (itemsIdsPaggination?.result) {
@@ -60,7 +58,8 @@ const HomePage = memo(() => {
 
   return (
     <section>
-      <FilterForm />
+      {/* <FilterForm /> */}
+      <AllFilters />
 
       {isLoading && <div>load...</div>}
       <ItemsList itemsIds={itemsForCurrentPage} />

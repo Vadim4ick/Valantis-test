@@ -5,7 +5,8 @@ import { fetchAllBrands } from "../services/fetchAllBrands";
 const initialState: Filters = {
   searchText: "",
   allBrands: [],
-  activeBrand: "Piaget",
+  activeBrand: "",
+  minPrice: null,
 };
 
 export const filtersSlice = createSlice({
@@ -18,6 +19,10 @@ export const filtersSlice = createSlice({
 
     setActiveBrand: (state, action: PayloadAction<string>) => {
       state.activeBrand = action.payload;
+    },
+
+    setMinPrice: (state, action: PayloadAction<number>) => {
+      state.minPrice = action.payload;
     },
   },
 

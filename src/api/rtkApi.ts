@@ -19,21 +19,40 @@ export const rtkApi = createApi({
   }),
 
   endpoints: (build) => ({
-    getIds: build.mutation<
-      { result: string[] },
-      {
-        filterString?: string;
-        filterBrand?: string;
-      }
-    >({
-      query: ({ filterString, filterBrand }) => ({
+    getIdsSearch: build.mutation<{ result: string[] }, string>({
+      query: (filterString) => ({
         url: `/`,
         method: "POST",
         body: {
           action: "filter",
           params: {
-            brand: filterBrand ? filterBrand : undefined,
             product: filterString,
+          },
+        },
+      }),
+    }),
+
+    getIdsBrand: build.mutation<{ result: string[] }, string>({
+      query: (filterBrand) => ({
+        url: `/`,
+        method: "POST",
+        body: {
+          action: "filter",
+          params: {
+            brand: filterBrand,
+          },
+        },
+      }),
+    }),
+
+    getIdsPrice: build.mutation<{ result: string[] }, number>({
+      query: (filterPrice) => ({
+        url: `/`,
+        method: "POST",
+        body: {
+          action: "filter",
+          params: {
+            price: filterPrice,
           },
         },
       }),
@@ -78,6 +97,8 @@ export const rtkApi = createApi({
   }),
 });
 
-export const getIds = rtkApi.useGetIdsMutation;
+export const getIdsSearch = rtkApi.useGetIdsSearchMutation;
+export const getIdsBrand = rtkApi.useGetIdsBrandMutation;
+export const getIdsPrice = rtkApi.useGetIdsPriceMutation;
 export const getItems = rtkApi.useGetItemsMutation;
 export const getInfoValue = rtkApi.useGetInfoValueMutation;

@@ -1,4 +1,4 @@
-import { getIds } from "@/api/rtkApi";
+import { getIdsSearch } from "@/api/rtkApi";
 import {
   getActiveBrand,
   getBrands,
@@ -17,20 +17,25 @@ const FilterForm = memo(() => {
 
   const dispatch = useAppDispatch();
 
-  const [getIdsFn] = getIds({
+  const [getIdsSearchFn] = getIdsSearch({
     fixedCacheKey: "filter",
   });
 
+  // const [getIdsBrandFn, { data }] = getIdsBrand({});
+
   const debounseFn = useDebounce((value) => {
-    getIdsFn({
-      filterString: value,
-      filterBrand: activeBrand,
-    });
+    getIdsSearchFn(value);
   }, 1000);
 
   useEffect(() => {
     dispatch(fetchAllBrands());
   }, [dispatch]);
+
+  // useEffect(() => {
+  //   getIdsBrandFn(activeBrand);
+  // }, [activeBrand, dispatch, getIdsBrandFn]);
+
+  // console.log(data);
 
   const setSearchText = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -48,7 +53,7 @@ const FilterForm = memo(() => {
         }}
       />
 
-      {brands.length && (
+      {brands.length !== 0 && (
         <select
           className="form w-[250px] h-[35px]"
           onChange={(e) => {
