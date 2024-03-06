@@ -1,12 +1,14 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { Filters } from "../type";
 import { fetchAllBrands } from "../services/fetchAllBrands";
+import { Filter } from "@/shared/types";
 
 const initialState: Filters = {
   searchText: null,
   allBrands: [],
   activeBrand: null,
   minPrice: null,
+  activeFilter: "search",
 };
 
 export const filtersSlice = createSlice({
@@ -23,6 +25,10 @@ export const filtersSlice = createSlice({
 
     setMinPrice: (state, action: PayloadAction<number>) => {
       state.minPrice = action.payload;
+    },
+
+    changeActiveFilter: (state, action: PayloadAction<Filter>) => {
+      state.activeFilter = action.payload;
     },
 
     removeFilters: (state) => {

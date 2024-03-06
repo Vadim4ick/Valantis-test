@@ -3,6 +3,8 @@ import { getFilters, getIds } from "@/api/rtkApi";
 import { AllFilters } from "@/components/Filters";
 import { ItemsList } from "@/components/ItemsList";
 import { Pagination } from "@/components/Pagination";
+import { getActiveBrand, getActiveFilter } from "@/redux/filters/selectors";
+import { useAppSelector } from "@/redux/store";
 import { usePagination } from "@/shared/hooks/usePagination";
 import { Preloader } from "@/shared/ui/Preloader";
 import { memo, useEffect } from "react";
@@ -12,17 +14,26 @@ const HomePage = memo(() => {
     fixedCacheKey: "filter",
   });
 
-  const [getIdsFn, { isLoading, data: itemsIdsPaggination }] = getIds({});
+  const activeBrand = useAppSelector(getActiveBrand);
+  const activeFilter = useAppSelector(getActiveFilter);
+
+  const [getIdsFn, { isLoading, data: itemsIdsPaggination }] = getIds({
+    fixedCacheKey: "getIds",
+  });
 
   useEffect(() => {
     getIdsFn(null);
   }, []);
 
-  const itemsForCurrentPage = usePagination(data || itemsIdsPaggination);
+  const itemsForCurrentPage = usePagination(
+    (activeBrand !== "" || activeFilter !== "brand") && data
+      ? data
+      : itemsIdsPaggination
+  );
 
   return (
     <section>
-      <AllFilters />
+      <AllFilters className="mb-4" />
 
       {isLoading && <Preloader />}
 

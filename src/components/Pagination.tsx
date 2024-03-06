@@ -3,6 +3,7 @@ import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { selectPagination } from "@/redux/pagination/selectors";
 import { paginationActions } from "@/redux/pagination/slice/paginationSlice";
 import { getVisiblePages } from "@/shared/helpers/getVisiblePages";
+import clsx from "clsx";
 
 const Pagination = memo(() => {
   const dispatch = useAppDispatch();
@@ -31,6 +32,9 @@ const Pagination = memo(() => {
     <div className="flex justify-center gap-3 mt-5">
       {visiblePages.map((pageNumber, index) => (
         <button
+          className={clsx("w-7 h-7 border-[1px] border-[#000]", {
+            "bg-orange-500 text-white": pageNumber === page,
+          })}
           key={index}
           disabled={pageNumber === "..."}
           onClick={() =>

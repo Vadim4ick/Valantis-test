@@ -25,7 +25,7 @@ const ItemsList = memo((props: ItemsListProps) => {
   }
 
   return (
-    <>
+    <Typography className="flex flex-col gap-3">
       <Typography tag="h2" variant="title-2" className="mb-5">
         Отсортированные товары
       </Typography>
@@ -40,7 +40,7 @@ const ItemsList = memo((props: ItemsListProps) => {
           return <Item key={`${item.id}_${i}`} item={item} />;
         })}
       </Typography>
-    </>
+    </Typography>
   );
 });
 

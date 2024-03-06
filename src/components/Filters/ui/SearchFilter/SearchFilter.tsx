@@ -3,6 +3,8 @@ import { getSearchText } from "@/redux/filters/selectors";
 import { filtersActions } from "@/redux/filters/slice/filtersSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { useDebounce } from "@/shared/hooks/useDebounce";
+import { Input } from "@/shared/ui/Input";
+import React, { useCallback } from "react";
 
 const SearchFilter = () => {
   const searchText = useAppSelector(getSearchText);
@@ -35,14 +37,19 @@ const SearchFilter = () => {
     debounseFn(searchText);
   }
 
+  const onChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchText(e);
+  }, []);
+
   return (
-    <input
-      type="text"
-      value={searchText}
-      onChange={(e) => {
-        setSearchText(e);
-      }}
-    />
+    <>
+      <Input
+        value={searchText}
+        onChange={onChange}
+        active={"search"}
+        label={"По тексту"}
+      />
+    </>
   );
 };
 

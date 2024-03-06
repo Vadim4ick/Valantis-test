@@ -1,13 +1,19 @@
-import { getFilters } from "@/api/rtkApi";
-import { getActiveBrand, getBrands } from "@/redux/filters/selectors";
+import { getFilters, getIds } from "@/api/rtkApi";
+import {
+  getActiveBrand,
+  getActiveFilter,
+  getBrands,
+} from "@/redux/filters/selectors";
 import { fetchAllBrands } from "@/redux/filters/services/fetchAllBrands";
 import { filtersActions } from "@/redux/filters/slice/filtersSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
-import { useEffect } from "react";
+import { Select, SelectOption } from "@/shared/ui/Select";
+import { useCallback, useEffect, useMemo } from "react";
 
 const BrandFilter = () => {
-  const brands = useAppSelector(getBrands);
+  const brands = useAppSelector(getBrands) as string[];
   const activeBrand = useAppSelector(getActiveBrand);
+  const activeFilter = useAppSelector(getActiveFilter);
 
   const dispatch = useAppDispatch();
 
@@ -19,14 +25,20 @@ const BrandFilter = () => {
     fixedCacheKey: "filter",
   });
 
+  const [getIdsFn] = getIds({
+    fixedCacheKey: "getIds",
+  });
+
   useEffect(() => {
     if (activeBrand !== "") {
       getIdsBrandFn({
         filter: "brand",
         value: activeBrand,
       });
+    } else {
+      getIdsFn(null);
     }
-  }, [activeBrand, dispatch, getIdsBrandFn]);
+  }, [activeBrand, dispatch, getIdsBrandFn, getIdsFn]);
 
   if (isError) {
     console.log("Err brand", error);
@@ -37,26 +49,37 @@ const BrandFilter = () => {
     });
   }
 
-  return (
-    <>
-      {brands.length !== 0 && (
-        <select
-          className="form w-[250px] h-[35px]"
-          onChange={(e) => {
-            dispatch(filtersActions.setActiveBrand(e.target.value));
-          }}
-          value={activeBrand}
-        >
-          <option value="">Все</option>
+  const onChange = useCallback((e: React.ChangeEvent<HTMLSelectElement>) => {
+    dispatch(filtersActions.setActiveBrand(e.target.value));
+  }, []);
 
-          {brands.map((el) => (
-            <option value={el} key={el}>
-              {el}
-            </option>
-          ))}
-        </select>
-      )}
-    </>
+  const options = useMemo(() => {
+    const arr = brands.map((el) => {
+      return {
+        value: el,
+        text: el,
+      };
+    });
+
+    const newArr = [
+      {
+        value: "",
+        text: "Все",
+      },
+      ...arr,
+    ] as SelectOption[];
+
+    return newArr;
+  }, [brands]);
+
+  return (
+    <Select
+      label="По бренду"
+      disabled={activeFilter !== "brand"}
+      onChange={onChange}
+      value={activeBrand}
+      options={options}
+    />
   );
 };
 
