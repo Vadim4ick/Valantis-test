@@ -1,8 +1,11 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { Filters } from "../type";
+import { fetchAllBrands } from "../services/fetchAllBrands";
 
 const initialState: Filters = {
   searchText: "",
+  allBrands: [],
+  activeBrand: "Piaget",
 };
 
 export const filtersSlice = createSlice({
@@ -12,6 +15,27 @@ export const filtersSlice = createSlice({
     setSearchText: (state, action: PayloadAction<string>) => {
       state.searchText = action.payload;
     },
+
+    setActiveBrand: (state, action: PayloadAction<string>) => {
+      state.activeBrand = action.payload;
+    },
+  },
+
+  extraReducers: (builder) => {
+    // builder.addCase(fetchAllBrands.pending, (state) => {
+    //   state.error = undefined;
+    //   state.isLoading = true;
+    // });
+    builder.addCase(
+      fetchAllBrands.fulfilled,
+      (state, action: PayloadAction<string[]>) => {
+        state.allBrands = action.payload;
+      }
+    );
+    // builder.addCase(fetchAllBrands.rejected, (state, action) => {
+    //   // state.isLoading = false;
+    //   // state.error = action.payload as string;
+    // });
   },
 });
 

@@ -19,13 +19,22 @@ export const rtkApi = createApi({
   }),
 
   endpoints: (build) => ({
-    getIds: build.mutation<{ result: string[] }, string>({
-      query: (filter) => ({
+    getIds: build.mutation<
+      { result: string[] },
+      {
+        filterString?: string;
+        filterBrand?: string;
+      }
+    >({
+      query: ({ filterString, filterBrand }) => ({
         url: `/`,
         method: "POST",
         body: {
           action: "filter",
-          params: { product: filter },
+          params: {
+            brand: filterBrand ? filterBrand : undefined,
+            product: filterString,
+          },
         },
       }),
     }),
@@ -49,8 +58,26 @@ export const rtkApi = createApi({
         return { result: newArray };
       },
     }),
+
+    getInfoValue: build.mutation<{ result: string[] }, null>({
+      query: () => ({
+        url: `/`,
+        method: "POST",
+        body: {
+          action: "get_fields",
+          params: { field: "brand" },
+        },
+      }),
+
+      transformResponse: (response: { result: string[] }) => {
+        const newArray = response.result.filter((el) => Boolean(el));
+
+        return { result: newArray };
+      },
+    }),
   }),
 });
 
 export const getIds = rtkApi.useGetIdsMutation;
 export const getItems = rtkApi.useGetItemsMutation;
+export const getInfoValue = rtkApi.useGetInfoValueMutation;

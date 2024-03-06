@@ -15,6 +15,12 @@ const Item = memo(({ item }: { item: IItem }) => {
       </Typography>
 
       <Typography className="min-h-16">
+        {item.brand && (
+          <Typography tag="p" variant="sub-title" className="block mb-1">
+            Бренд <Typography tag="span">{item.brand}</Typography>
+          </Typography>
+        )}
+
         <Typography tag="p" variant="sub-title" className="block mb-1">
           Старая Цена{" "}
           <Typography tag="span" className="line-through">
