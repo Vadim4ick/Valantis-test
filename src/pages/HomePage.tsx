@@ -1,4 +1,4 @@
-import { getIdsSearch } from "@/api/rtkApi";
+import { getFilters } from "@/api/rtkApi";
 import { AllFilters } from "@/components/Filters";
 import { ItemsList } from "@/components/ItemsList";
 import { Pagination } from "@/components/Pagination";
@@ -16,12 +16,15 @@ const HomePage = memo(() => {
   // const endIndex = useAppSelector(selectEndIndex);
 
   const [getIdsFn, { isLoading, data: itemsIdsPaggination, error }] =
-    getIdsSearch({
+    getFilters({
       fixedCacheKey: "filter",
     });
 
   useEffect(() => {
-    getIdsFn("");
+    getIdsFn({
+      filter: "search",
+      value: "",
+    });
   }, [getIdsFn]);
 
   useEffect(() => {

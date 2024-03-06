@@ -1,12 +1,7 @@
 import { getUniqueItemsById } from "@/shared/helpers/getUniqueItemsById";
-import { Item } from "@/shared/types";
+import { xAuth } from "@/shared/helpers/xAuth";
+import { Filter, Item } from "@/shared/types";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import md5 from "md5";
-
-const timestamp = new Date().toISOString().slice(0, 10).replace(/-/g, ""); // Получаем текущий таймштамп в формате ГГГГММДД
-const password = "Valantis"; // Пароль для доступа к API
-const authString = `${password}_${timestamp}`;
-const xAuth = md5(authString); // Вычисляем MD5-хэш от пароля и таймштампа
 
 export const rtkApi = createApi({
   reducerPath: "api",
@@ -19,43 +14,87 @@ export const rtkApi = createApi({
   }),
 
   endpoints: (build) => ({
-    getIdsSearch: build.mutation<{ result: string[] }, string>({
-      query: (filterString) => ({
-        url: `/`,
-        method: "POST",
-        body: {
-          action: "filter",
-          params: {
-            product: filterString,
-          },
-        },
-      }),
-    }),
+    // getIdsSearch: build.mutation<{ result: string[] }, string>({
+    //   query: (filterString) => ({
+    //     url: `/`,
+    //     method: "POST",
+    //     body: {
+    //       action: "filter",
+    //       params: {
+    //         product: filterString,
+    //       },
+    //     },
+    //   }),
+    // }),
 
-    getIdsBrand: build.mutation<{ result: string[] }, string>({
-      query: (filterBrand) => ({
-        url: `/`,
-        method: "POST",
-        body: {
-          action: "filter",
-          params: {
-            brand: filterBrand,
-          },
-        },
-      }),
-    }),
+    // getIdsBrand: build.mutation<{ result: string[] }, string>({
+    //   query: (filterBrand) => ({
+    //     url: `/`,
+    //     method: "POST",
+    //     body: {
+    //       action: "filter",
+    //       params: {
+    //         brand: filterBrand,
+    //       },
+    //     },
+    //   }),
+    // }),
 
-    getIdsPrice: build.mutation<{ result: string[] }, number>({
-      query: (filterPrice) => ({
-        url: `/`,
-        method: "POST",
-        body: {
-          action: "filter",
-          params: {
-            price: filterPrice,
-          },
-        },
-      }),
+    // getIdsPrice: build.mutation<{ result: string[] }, number>({
+    //   query: (filterPrice) => ({
+    //     url: `/`,
+    //     method: "POST",
+    //     body: {
+    //       action: "filter",
+    //       params: {
+    //         price: filterPrice,
+    //       },
+    //     },
+    //   }),
+    // }),
+
+    getFilters: build.mutation<
+      { result: string[] },
+      { filter: Filter; value: string | number }
+    >({
+      query: ({ filter, value }) => {
+        switch (filter) {
+          case "brand":
+            return {
+              url: `/`,
+              method: "POST",
+              body: {
+                action: "filter",
+                params: {
+                  brand: value,
+                },
+              },
+            };
+          case "price":
+            return {
+              url: `/`,
+              method: "POST",
+              body: {
+                action: "filter",
+                params: {
+                  price: value,
+                },
+              },
+            };
+
+          default:
+            return {
+              url: `/`,
+              method: "POST",
+              body: {
+                action: "filter",
+                params: {
+                  product: value,
+                },
+              },
+            };
+        }
+      },
     }),
 
     getItems: build.mutation<{ result: Item[] }, string[]>({
@@ -97,8 +136,10 @@ export const rtkApi = createApi({
   }),
 });
 
-export const getIdsSearch = rtkApi.useGetIdsSearchMutation;
-export const getIdsBrand = rtkApi.useGetIdsBrandMutation;
-export const getIdsPrice = rtkApi.useGetIdsPriceMutation;
+// export const getIdsSearch = rtkApi.useGetIdsSearchMutation;
+// export const getIdsBrand = rtkApi.useGetIdsBrandMutation;
+// export const getIdsPrice = rtkApi.useGetIdsPriceMutation;
+export const getFilters = rtkApi.useGetFiltersMutation;
+
 export const getItems = rtkApi.useGetItemsMutation;
 export const getInfoValue = rtkApi.useGetInfoValueMutation;

@@ -12,3 +12,5 @@ export interface StateSchema {
   pagination: Pagination;
   filters: Filters;
 }
+
+export type Filter = "search" | "brand" | "price";

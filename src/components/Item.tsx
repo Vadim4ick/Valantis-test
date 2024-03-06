@@ -15,11 +15,14 @@ const Item = memo(({ item }: { item: IItem }) => {
       </Typography>
 
       <Typography className="min-h-16">
-        {item.brand && (
-          <Typography tag="p" variant="sub-title" className="block mb-1">
-            Бренд <Typography tag="span">{item.brand}</Typography>
+        <Typography tag="p" variant="sub-title" className="block mb-1">
+          <b>Бренд:</b>{" "}
+          <Typography tag="span">
+            {item.brand ? item.brand : "Без бренда!"}
           </Typography>
-        )}
+        </Typography>
+
+        <hr />
 
         <Typography tag="p" variant="sub-title" className="block mb-1">
           Старая Цена{" "}
@@ -34,9 +37,13 @@ const Item = memo(({ item }: { item: IItem }) => {
             <b> {item.price} руб</b>
           </Typography>
         </Typography>
+
+        <hr />
       </Typography>
 
-      <button>В корзину</button>
+      <Typography tag="p" variant="sub-title" className="block">
+        <b>ID:</b> <Typography tag="span">{item.id}</Typography>
+      </Typography>
     </Typography>
   );
 });

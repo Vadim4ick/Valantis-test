@@ -1,4 +1,4 @@
-import { getIdsSearch } from "@/api/rtkApi";
+import { getFilters } from "@/api/rtkApi";
 import { getSearchText } from "@/redux/filters/selectors";
 import { filtersActions } from "@/redux/filters/slice/filtersSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
@@ -8,12 +8,15 @@ const SearchFilter = () => {
   const searchText = useAppSelector(getSearchText);
   const dispatch = useAppDispatch();
 
-  const [getIdsSearchFn] = getIdsSearch({
+  const [getIdsSearchFn] = getFilters({
     fixedCacheKey: "filter",
   });
 
   const debounseFn = useDebounce((value) => {
-    getIdsSearchFn(value);
+    getIdsSearchFn({
+      filter: "search",
+      value: value,
+    });
   }, 1000);
 
   const setSearchText = (e: React.ChangeEvent<HTMLInputElement>) => {
