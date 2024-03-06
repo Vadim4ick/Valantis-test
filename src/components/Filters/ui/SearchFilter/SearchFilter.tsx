@@ -25,10 +25,14 @@ const SearchFilter = () => {
     debounseFn(value);
   };
 
+  // if (isLoading) {
+  //   return <Skeleton width={177} height={35} />;
+  // }
+
   if (isError) {
     console.log("Err Search", error);
 
-    return debounseFn(searchText);
+    debounseFn(searchText);
   }
 
   return (

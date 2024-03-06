@@ -2,6 +2,7 @@ import { Typography } from "@/shared/ui/Typography";
 import { Item } from "./Item";
 import { memo, useEffect } from "react";
 import { getItems } from "@/api/rtkApi";
+import { Skeleton } from "@/shared/ui/Skeleton";
 
 interface ItemsListProps {
   itemsIds: string[] | undefined;
@@ -10,7 +11,7 @@ interface ItemsListProps {
 const ItemsList = memo((props: ItemsListProps) => {
   const { itemsIds } = props;
 
-  const [getItemsFn, { isLoading, data: items, error }] = getItems({});
+  const [getItemsFn, { isLoading, data: items, error, isError }] = getItems({});
 
   useEffect(() => {
     if (itemsIds?.length) {
@@ -18,12 +19,9 @@ const ItemsList = memo((props: ItemsListProps) => {
     }
   }, [itemsIds]);
 
-  if (isLoading) {
-    return <div>load...</div>;
-  }
-
-  if (error) {
-    return <div>Ошибка</div>;
+  if (isError) {
+    console.log("Error ItemsList", error);
+    getItemsFn(itemsIds || []);
   }
 
   return (
@@ -33,6 +31,11 @@ const ItemsList = memo((props: ItemsListProps) => {
       </Typography>
 
       <Typography className="grid grid-cols-main gap-4">
+        {isLoading &&
+          new Array(50).fill(0).map((_, i) => {
+            return <Skeleton key={i} width={240} height={221} />;
+          })}
+
         {items?.result.map((item, i) => {
           return <Item key={`${item.id}_${i}`} item={item} />;
         })}

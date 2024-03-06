@@ -24,6 +24,12 @@ export const filtersSlice = createSlice({
     setMinPrice: (state, action: PayloadAction<number>) => {
       state.minPrice = action.payload;
     },
+
+    removeFilters: (state) => {
+      state.minPrice = null;
+      state.searchText = null;
+      state.activeBrand = null;
+    },
   },
 
   extraReducers: (builder) => {

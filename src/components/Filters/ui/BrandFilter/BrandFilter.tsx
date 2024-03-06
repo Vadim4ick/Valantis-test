@@ -29,9 +29,9 @@ const BrandFilter = () => {
   }, [activeBrand, dispatch, getIdsBrandFn]);
 
   if (isError) {
-    console.log("Err Search", error);
+    console.log("Err brand", error);
 
-    return getIdsBrandFn({
+    getIdsBrandFn({
       filter: "brand",
       value: activeBrand,
     });

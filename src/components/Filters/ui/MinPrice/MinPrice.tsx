@@ -6,8 +6,6 @@ const MinPrice = () => {
   const minPrice = useAppSelector(getMinPrice);
   const dispatch = useAppDispatch();
 
-  console.log(minPrice);
-
   return (
     <input
       type="number"
