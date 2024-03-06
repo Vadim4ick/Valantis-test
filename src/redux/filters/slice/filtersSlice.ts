@@ -3,9 +3,9 @@ import { Filters } from "../type";
 import { fetchAllBrands } from "../services/fetchAllBrands";
 
 const initialState: Filters = {
-  searchText: "",
+  searchText: null,
   allBrands: [],
-  activeBrand: "",
+  activeBrand: null,
   minPrice: null,
 };
 

@@ -8,7 +8,7 @@ const SearchFilter = () => {
   const searchText = useAppSelector(getSearchText);
   const dispatch = useAppDispatch();
 
-  const [getIdsSearchFn] = getFilters({
+  const [getIdsSearchFn, { isError, error }] = getFilters({
     fixedCacheKey: "filter",
   });
 
@@ -24,6 +24,12 @@ const SearchFilter = () => {
     dispatch(filtersActions.setSearchText(value));
     debounseFn(value);
   };
+
+  if (isError) {
+    console.log("Err Search", error);
+
+    return debounseFn(searchText);
+  }
 
   return (
     <input

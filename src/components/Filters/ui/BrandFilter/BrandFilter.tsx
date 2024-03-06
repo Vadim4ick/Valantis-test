@@ -1,4 +1,4 @@
-// import { getIdsBrand } from "@/api/rtkApi";
+import { getFilters } from "@/api/rtkApi";
 import { getActiveBrand, getBrands } from "@/redux/filters/selectors";
 import { fetchAllBrands } from "@/redux/filters/services/fetchAllBrands";
 import { filtersActions } from "@/redux/filters/slice/filtersSlice";
@@ -15,20 +15,27 @@ const BrandFilter = () => {
     dispatch(fetchAllBrands());
   }, [dispatch]);
 
-  // const [getIdsBrandFn] = getIdsBrand({
-  //   fixedCacheKey: "filter",
-  //   selectFromResult: ({ data }) => {
-  //     console.log("res", data);
+  const [getIdsBrandFn, { isError, error }] = getFilters({
+    fixedCacheKey: "filter",
+  });
 
-  //     return data ?? {};
-  //   },
-  // });
+  useEffect(() => {
+    if (activeBrand !== "") {
+      getIdsBrandFn({
+        filter: "brand",
+        value: activeBrand,
+      });
+    }
+  }, [activeBrand, dispatch, getIdsBrandFn]);
 
-  // useEffect(() => {
-  //   if (activeBrand !== "") {
-  //     getIdsBrandFn(activeBrand);
-  //   }
-  // }, [activeBrand, dispatch, getIdsBrandFn]);
+  if (isError) {
+    console.log("Err Search", error);
+
+    return getIdsBrandFn({
+      filter: "brand",
+      value: activeBrand,
+    });
+  }
 
   return (
     <>

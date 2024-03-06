@@ -26,10 +26,6 @@ const ItemsList = memo((props: ItemsListProps) => {
     return <div>Ошибка</div>;
   }
 
-  if (!items?.result) {
-    return <div>Что-то пошло не так</div>;
-  }
-
   return (
     <>
       <Typography tag="h2" variant="title-2" className="mb-5">
@@ -37,7 +33,7 @@ const ItemsList = memo((props: ItemsListProps) => {
       </Typography>
 
       <Typography className="grid grid-cols-main gap-4">
-        {items.result.map((item, i) => {
+        {items?.result.map((item, i) => {
           return <Item key={`${item.id}_${i}`} item={item} />;
         })}
       </Typography>
