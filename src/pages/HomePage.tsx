@@ -7,10 +7,11 @@ import { getActiveBrand, getActiveFilter } from "@/redux/filters/selectors";
 import { useAppSelector } from "@/redux/store";
 import { usePagination } from "@/shared/hooks/usePagination";
 import { Preloader } from "@/shared/ui/Preloader";
+import { Skeleton } from "@/shared/ui/Skeleton";
 import { memo, useEffect } from "react";
 
 const HomePage = memo(() => {
-  const [_, { data }] = getFilters({
+  const [_, { data, isLoading: load }] = getFilters({
     fixedCacheKey: "filter",
   });
 
@@ -39,7 +40,7 @@ const HomePage = memo(() => {
 
       <ItemsList itemsIds={itemsForCurrentPage} />
 
-      <Pagination />
+      {isLoading || load ? <Skeleton /> : <Pagination />}
     </section>
   );
 });

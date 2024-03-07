@@ -7,7 +7,7 @@ const initialState: Filters = {
   searchText: null,
   allBrands: [],
   activeBrand: null,
-  minPrice: null,
+  price: null,
   activeFilter: "search",
 };
 
@@ -23,8 +23,8 @@ export const filtersSlice = createSlice({
       state.activeBrand = action.payload;
     },
 
-    setMinPrice: (state, action: PayloadAction<number>) => {
-      state.minPrice = action.payload;
+    setPrice: (state, action: PayloadAction<number>) => {
+      state.price = action.payload;
     },
 
     changeActiveFilter: (state, action: PayloadAction<Filter>) => {
@@ -32,7 +32,7 @@ export const filtersSlice = createSlice({
     },
 
     removeFilters: (state) => {
-      state.minPrice = null;
+      state.price = null;
       state.searchText = null;
       state.activeBrand = null;
     },

@@ -1,7 +1,7 @@
 import { memo, useCallback } from "react";
 import { SearchFilter } from "../SearchFilter/SearchFilter";
 import { BrandFilter } from "../BrandFilter/BrandFilter";
-import { MinPrice } from "../MinPrice/MinPrice";
+import { Price } from "../Price/Price";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { getActiveFilter } from "@/redux/filters/selectors";
 import { filtersActions } from "@/redux/filters/slice/filtersSlice";
@@ -46,7 +46,7 @@ const AllFilters = memo(({ className }: { className?: string }) => {
 
         <BrandFilter />
 
-        <MinPrice />
+        <Price />
       </Typography>
     </Typography>
   );
