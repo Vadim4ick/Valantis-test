@@ -1,6 +1,7 @@
 import { getFilters } from "@/api/rtkApi";
 import { getPrice } from "@/redux/filters/selectors";
 import { filtersActions } from "@/redux/filters/slice/filtersSlice";
+import { paginationActions } from "@/redux/pagination/slice/paginationSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { useDebounce } from "@/shared/hooks/useDebounce";
 import { Input } from "@/shared/ui/Input";
@@ -18,6 +19,8 @@ const Price = () => {
       filter: "price",
       value: value,
     });
+
+    dispatch(paginationActions.setPage(1));
   }, 1000);
 
   const setPriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {

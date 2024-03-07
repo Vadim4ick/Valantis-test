@@ -5,7 +5,7 @@ import { getItems } from "@/api/rtkApi";
 import { Skeleton } from "@/shared/ui/Skeleton";
 
 interface ItemsListProps {
-  itemsIds: string[] | undefined;
+  itemsIds: string[];
 }
 
 const ItemsList = memo((props: ItemsListProps) => {
@@ -14,22 +14,12 @@ const ItemsList = memo((props: ItemsListProps) => {
   const [getItemsFn, { isLoading, data: items, error, isError }] = getItems({});
 
   useEffect(() => {
-    if (itemsIds?.length) {
-      getItemsFn(itemsIds);
-    }
+    getItemsFn(itemsIds);
   }, [itemsIds]);
 
   if (isError) {
     console.log("Error ItemsList", error);
     getItemsFn(itemsIds || []);
-  }
-
-  if (!isLoading && itemsIds && itemsIds.length == 0) {
-    return (
-      <Typography className="mx-auto table" tag="h3" variant="title-2">
-        Ничего не найдено.... Измените фильтры
-      </Typography>
-    );
   }
 
   return (

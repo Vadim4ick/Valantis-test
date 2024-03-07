@@ -28,6 +28,10 @@ const Pagination = memo(() => {
 
   const visiblePages = getVisiblePages(pages, totalPages);
 
+  if (pages.length === 0 && totalPages === 0) {
+    return;
+  }
+
   return (
     <div className="flex justify-center gap-3 mt-5">
       {visiblePages.map((pageNumber, index) => (

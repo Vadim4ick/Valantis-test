@@ -1,6 +1,7 @@
 import { getFilters } from "@/api/rtkApi";
 import { getSearchText } from "@/redux/filters/selectors";
 import { filtersActions } from "@/redux/filters/slice/filtersSlice";
+import { paginationActions } from "@/redux/pagination/slice/paginationSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { useDebounce } from "@/shared/hooks/useDebounce";
 import { Input } from "@/shared/ui/Input";
@@ -19,6 +20,8 @@ const SearchFilter = () => {
       filter: "search",
       value: value,
     });
+
+    dispatch(paginationActions.setPage(1));
   }, 1000);
 
   const setSearchText = (e: React.ChangeEvent<HTMLInputElement>) => {

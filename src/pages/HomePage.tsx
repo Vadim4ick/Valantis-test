@@ -12,6 +12,7 @@ import { useAppSelector } from "@/redux/store";
 import { usePagination } from "@/shared/hooks/usePagination";
 import { Preloader } from "@/shared/ui/Preloader";
 import { Skeleton } from "@/shared/ui/Skeleton";
+import { Typography } from "@/shared/ui/Typography";
 import { memo, useEffect } from "react";
 
 const HomePage = memo(() => {
@@ -37,14 +38,6 @@ const HomePage = memo(() => {
       data
       ? data
       : itemsIdsPaggination
-
-    // activeBrand === "" && activeFilter === "brand"
-    //   ? itemsIdsPaggination
-    //   : activeFilter === "price"
-    //   ? data
-    //   : activeFilter === "brand"
-    //   ? data
-    //   : itemsIdsPaggination
   );
 
   return (
@@ -53,7 +46,13 @@ const HomePage = memo(() => {
 
       {isLoading && <Preloader />}
 
-      <ItemsList itemsIds={itemsForCurrentPage} />
+      {itemsForCurrentPage.length > 0 ? (
+        <ItemsList itemsIds={itemsForCurrentPage} />
+      ) : (
+        <Typography className="mx-auto table" tag="h3" variant="title-2">
+          Ничего не найдено.... Измените фильтры
+        </Typography>
+      )}
 
       {isLoading || load ? <Skeleton /> : <Pagination />}
     </section>

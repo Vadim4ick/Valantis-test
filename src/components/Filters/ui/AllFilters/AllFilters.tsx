@@ -31,7 +31,7 @@ const AllFilters = memo(({ className }: { className?: string }) => {
     >
       <Typography className="flex flex-col items-center gap-3">
         <Typography tag="h3" variant="title-3">
-          Выберите один из фильтров который будет для вас активен
+          Выберите ОДИН из фильтров который будет для вас активен
         </Typography>
 
         <Select

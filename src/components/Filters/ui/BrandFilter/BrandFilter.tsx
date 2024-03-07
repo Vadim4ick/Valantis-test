@@ -6,6 +6,7 @@ import {
 } from "@/redux/filters/selectors";
 import { fetchAllBrands } from "@/redux/filters/services/fetchAllBrands";
 import { filtersActions } from "@/redux/filters/slice/filtersSlice";
+import { paginationActions } from "@/redux/pagination/slice/paginationSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { Select, SelectOption } from "@/shared/ui/Select";
 import { useCallback, useEffect, useMemo } from "react";
@@ -35,8 +36,10 @@ const BrandFilter = () => {
         filter: "brand",
         value: activeBrand,
       });
+      dispatch(paginationActions.setPage(1));
     } else {
       getIdsFn(null);
+      dispatch(paginationActions.setPage(1));
     }
   }, [activeBrand, dispatch, getIdsBrandFn, getIdsFn]);
 
