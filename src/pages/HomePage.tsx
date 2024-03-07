@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { getFilters, getIds } from "@/api/rtkApi";
-import { AllFilters } from "@/components/Filters";
 import { ItemsList } from "@/components/ItemsList";
 import { Pagination } from "@/components/Pagination";
 import {
@@ -40,12 +39,15 @@ const HomePage = memo(() => {
       : itemsIdsPaggination
   );
 
+  if (isLoading) {
+    return <Preloader />;
+  }
+
+  if (isLoading || load) {
+    return <Skeleton />;
+  }
   return (
-    <section>
-      <AllFilters className="mb-4" />
-
-      {isLoading && <Preloader />}
-
+    <>
       {itemsForCurrentPage.length > 0 ? (
         <ItemsList itemsIds={itemsForCurrentPage} />
       ) : (
@@ -54,8 +56,8 @@ const HomePage = memo(() => {
         </Typography>
       )}
 
-      {isLoading || load ? <Skeleton /> : <Pagination />}
-    </section>
+      <Pagination />
+    </>
   );
 });
 
