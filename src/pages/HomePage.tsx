@@ -3,7 +3,11 @@ import { getFilters, getIds } from "@/api/rtkApi";
 import { AllFilters } from "@/components/Filters";
 import { ItemsList } from "@/components/ItemsList";
 import { Pagination } from "@/components/Pagination";
-import { getActiveBrand, getActiveFilter } from "@/redux/filters/selectors";
+import {
+  getActiveBrand,
+  getActiveFilter,
+  getPrice,
+} from "@/redux/filters/selectors";
 import { useAppSelector } from "@/redux/store";
 import { usePagination } from "@/shared/hooks/usePagination";
 import { Preloader } from "@/shared/ui/Preloader";
@@ -17,6 +21,7 @@ const HomePage = memo(() => {
 
   const activeBrand = useAppSelector(getActiveBrand);
   const activeFilter = useAppSelector(getActiveFilter);
+  const price = useAppSelector(getPrice);
 
   const [getIdsFn, { isLoading, data: itemsIdsPaggination }] = getIds({
     fixedCacheKey: "getIds",
@@ -27,9 +32,19 @@ const HomePage = memo(() => {
   }, []);
 
   const itemsForCurrentPage = usePagination(
-    (activeBrand !== "" || activeFilter !== "brand") && data
+    (activeBrand !== "" || activeFilter !== "brand") &&
+      (activeFilter !== "price" || price !== null) &&
+      data
       ? data
       : itemsIdsPaggination
+
+    // activeBrand === "" && activeFilter === "brand"
+    //   ? itemsIdsPaggination
+    //   : activeFilter === "price"
+    //   ? data
+    //   : activeFilter === "brand"
+    //   ? data
+    //   : itemsIdsPaggination
   );
 
   return (

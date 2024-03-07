@@ -24,6 +24,14 @@ const ItemsList = memo((props: ItemsListProps) => {
     getItemsFn(itemsIds || []);
   }
 
+  if (!isLoading && itemsIds && itemsIds.length == 0) {
+    return (
+      <Typography className="mx-auto table" tag="h3" variant="title-2">
+        Ничего не найдено.... Измените фильтры
+      </Typography>
+    );
+  }
+
   return (
     <Typography className="flex flex-col gap-3">
       <Typography tag="h2" variant="title-2" className="mb-5">
